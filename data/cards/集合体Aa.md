@@ -1,4 +1,5 @@
 ---
+id: 20
 title: "集合体Aa"
 description: "AI绘画技术分享与作品展示。专注于AI绘画技术的深度解析和创作经验分享。"
 category: "优质UP"
