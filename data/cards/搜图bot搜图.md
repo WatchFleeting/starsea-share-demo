@@ -1,4 +1,5 @@
 ---
+id: 13
 title: "搜图bot搜图"
 description: "专注于本子识图的机器人。支持Telegram和Discord平台，使用方便快捷。"
 category: "识图资源"
