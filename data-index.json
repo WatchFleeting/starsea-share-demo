@@ -1,5 +1,5 @@
 {
-  "cards":[
+  "cards": [
     "data/cards/design_resources.md",
     "data/cards/ai_painting.md"
     "data/cards/nhentai.md",
@@ -25,10 +25,10 @@
     "data/cards/杰惹杰OWO.md",
     "data/cards/趣味心理实验室.md",
   ],
-  "articles":[
+  "articles": [
     "data/articles/ai-painting-guide.md"
   ],
-  "files":[
+  "files": [
     "data/files/design-resources-details.md"
   ]
 }
