@@ -1,5 +1,5 @@
 ---
-id: 4
+id: 2
 title: "AI绘画完全指南"
 description: "从基础到进阶，全面讲解AI绘画的原理、工具选择和实践技巧。"
 category: "技术文章"
