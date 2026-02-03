@@ -1,14 +1,14 @@
 {
-  "cards": [
+  "cards":[
     "data/cards/01_nhentai.md",
     "data/cards/02_ehviewer.md",
     "data/cards/03_design_resources.md",
     "data/cards/04_ai_painting.md"
   ],
-  "articles": [
+  "articles":[
     "data/articles/ai-painting-guide.md"
   ],
-  "files": [
+  "files":[
     "data/files/design-resources-details.md"
   ]
 }
