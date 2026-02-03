@@ -1,4 +1,5 @@
 ---
+id: 10
 title: "yandex搜图"
 description: "俄罗斯的搜索引擎，识图功能强大。特别擅长识别动漫和二次元图片，准确率较高。"
 category: "识图资源"
