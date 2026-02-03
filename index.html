@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鸿渚资源分享站 | 网页·软件·文件·文章一站式分享</title>
-    <meta name="description" content="基于Markdown的静态资源分享站，支持网页推荐、软件下载、文件分享和技术文章。">
-    <meta name="keywords" content="资源分享,网页推荐,软件下载,技术文章,Markdown">
+    <title>鸿渚资源分享站 | 漫画·设计·AI绘画·技术文章</title>
+    <meta name="description" content="资源分享站，包含漫画资源、设计素材、AI绘画指南和技术文章。">
+    <meta name="keywords" content="漫画资源,设计素材,AI绘画,技术文章,资源分享">
     <meta name="author" content="鸿渚">
 
     <!-- 样式和脚本库 -->
@@ -18,10 +18,9 @@
         /* ===== CSS 变量定义 ===== */
         :root {
             /* 资源类型颜色 */
-            --color-web: #3b82f6;
-            --color-software: #8b5cf6;
+            --color-card: #3b82f6;
+            --color-article: #8b5cf6;
             --color-file: #10b981;
-            --color-article: #f59e0b;
 
             /* 主题颜色 */
             --primary-color: #2563eb;
@@ -241,10 +240,9 @@
             letter-spacing: 1px;
         }
 
-        .stat-web .stat-icon { color: var(--color-web); }
-        .stat-software .stat-icon { color: var(--color-software); }
-        .stat-file .stat-icon { color: var(--color-file); }
-        .stat-article .stat-icon { color: var(--color-article); }
+        .stat-cards .stat-icon { color: var(--color-card); }
+        .stat-articles .stat-icon { color: var(--color-article); }
+        .stat-files .stat-icon { color: var(--color-file); }
 
         /* ===== 分类筛选 ===== */
         .category-filters {
@@ -285,10 +283,9 @@
         }
 
         .filter-all.active { background: linear-gradient(135deg, #667eea, #764ba2); }
-        .filter-web.active { background: var(--color-web); }
-        .filter-software.active { background: var(--color-software); }
-        .filter-file.active { background: var(--color-file); }
-        .filter-article.active { background: var(--color-article); }
+        .filter-cards.active { background: var(--color-card); }
+        .filter-articles.active { background: var(--color-article); }
+        .filter-files.active { background: var(--color-file); }
 
         /* ===== 搜索结果显示 ===== */
         .search-results {
@@ -386,10 +383,9 @@
             background: rgba(0,0,0,0.7);
         }
 
-        .card-type-web { background: var(--color-web); }
-        .card-type-software { background: var(--color-software); }
-        .card-type-file { background: var(--color-file); }
-        .card-type-article { background: var(--color-article); }
+        .card-type-cards { background: var(--color-card); }
+        .card-type-articles { background: var(--color-article); }
+        .card-type-files { background: var(--color-file); }
 
         .card-icon {
             font-size: 3.5rem;
@@ -580,46 +576,51 @@
             padding: 2rem;
         }
 
-        .modal-body.web-content,
-        .modal-body.software-content,
+        .modal-body.article-content,
         .modal-body.file-content {
-            text-align: center;
-        }
-
-        /* 文章内容的特定样式 */
-        .modal-body.article-content {
             font-size: 1.05rem;
             line-height: 1.8;
         }
 
         .modal-body.article-content h1,
         .modal-body.article-content h2,
-        .modal-body.article-content h3 {
+        .modal-body.article-content h3,
+        .modal-body.file-content h1,
+        .modal-body.file-content h2,
+        .modal-body.file-content h3 {
             margin-top: 1.8em;
             margin-bottom: 0.8em;
             color: var(--text-primary);
             font-weight: 700;
         }
 
-        .modal-body.article-content h1 { font-size: 2rem; }
-        .modal-body.article-content h2 { font-size: 1.6rem; }
-        .modal-body.article-content h3 { font-size: 1.3rem; }
+        .modal-body.article-content h1,
+        .modal-body.file-content h1 { font-size: 2rem; }
+        .modal-body.article-content h2,
+        .modal-body.file-content h2 { font-size: 1.6rem; }
+        .modal-body.article-content h3,
+        .modal-body.file-content h3 { font-size: 1.3rem; }
 
-        .modal-body.article-content p {
+        .modal-body.article-content p,
+        .modal-body.file-content p {
             margin-bottom: 1.2em;
         }
 
         .modal-body.article-content ul,
-        .modal-body.article-content ol {
+        .modal-body.article-content ol,
+        .modal-body.file-content ul,
+        .modal-body.file-content ol {
             margin-bottom: 1.2em;
             padding-left: 2em;
         }
 
-        .modal-body.article-content li {
+        .modal-body.article-content li,
+        .modal-body.file-content li {
             margin-bottom: 0.5em;
         }
 
-        .modal-body.article-content blockquote {
+        .modal-body.article-content blockquote,
+        .modal-body.file-content blockquote {
             border-left: 4px solid var(--primary-color);
             padding-left: 1.5rem;
             margin: 1.5rem 0;
@@ -627,7 +628,8 @@
             font-style: italic;
         }
 
-        .modal-body.article-content pre {
+        .modal-body.article-content pre,
+        .modal-body.file-content pre {
             background: var(--bg-light);
             border-radius: 8px;
             padding: 1.5rem;
@@ -636,7 +638,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .modal-body.article-content code {
+        .modal-body.article-content code,
+        .modal-body.file-content code {
             font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
             font-size: 0.9em;
             padding: 0.2em 0.4em;
@@ -645,7 +648,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .modal-body.article-content img {
+        .modal-body.article-content img,
+        .modal-body.file-content img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
@@ -753,7 +757,7 @@
             .stats-panel { grid-template-columns: 1fr; }
             .resources-grid { grid-template-columns: 1fr; }
             .modal-content { width: 95%; }
-            .modal-header, .modal-body, .modal-footer { padding: 1.5rem; }
+            .modal-header, .modal-body, .modalFooter { padding: 1.5rem; }
         }
 
         @media (max-width: 480px) {
@@ -800,7 +804,7 @@
                     鸿渚资源分享站
                 </h1>
                 <p class="site-subtitle">
-                    网页·软件·文件·文章一站式分享 | 基于 Markdown 的静态资源分享站
+                    漫画·设计·AI绘画·技术文章 | 一站式资源分享平台
                 </p>
                 
                 <div class="header-actions">
@@ -846,8 +850,7 @@
     <script>
         // ===== 应用配置和状态 =====
         const AppConfig = {
-            dataUrl: 'data-index.json', // 资源索引文件
-            markdownDir: 'data/'        // Markdown 文件目录
+            dataUrl: 'data-index.json' // 资源索引文件
         };
 
         const AppState = {
@@ -859,10 +862,9 @@
             darkMode: false,           // 深色模式状态
             stats: {                   // 统计数据
                 all: 0,
-                web: 0,
-                software: 0,
-                file: 0,
-                article: 0
+                cards: 0,
+                articles: 0,
+                files: 0
             }
         };
 
@@ -871,10 +873,9 @@
             // 获取资源类型信息
             getTypeInfo(type) {
                 const types = {
-                    web: { name: '网页推荐', icon: 'fas fa-globe', color: 'var(--color-web)' },
-                    software: { name: '软件工具', icon: 'fas fa-download', color: 'var(--color-software)' },
-                    file: { name: '文件分享', icon: 'fas fa-file-alt', color: 'var(--color-file)' },
-                    article: { name: '技术文章', icon: 'fas fa-newspaper', color: 'var(--color-article)' }
+                    cards: { name: '卡片资源', icon: 'fas fa-layer-group', color: 'var(--color-card)' },
+                    articles: { name: '文章教程', icon: 'fas fa-newspaper', color: 'var(--color-article)' },
+                    files: { name: '文件下载', icon: 'fas fa-file-download', color: 'var(--color-file)' }
                 };
                 return types[type] || { name: '未知类型', icon: 'fas fa-cube', color: 'var(--secondary-color)' };
             },
@@ -906,12 +907,57 @@
             // 生成卡片背景颜色
             generateCardColor(type) {
                 const colors = {
-                    web: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-                    software: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-                    file: 'linear-gradient(135deg, #10b981, #059669)',
-                    article: 'linear-gradient(135deg, #f59e0b, #d97706)'
+                    cards: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                    articles: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                    files: 'linear-gradient(135deg, #10b981, #059669)'
                 };
                 return colors[type] || 'linear-gradient(135deg, #6b7280, #4b5563)';
+            },
+
+            // 解析Markdown文件中的front matter
+            parseMarkdownWithFrontMatter(markdownContent) {
+                const frontMatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+                const match = markdownContent.match(frontMatterRegex);
+                
+                if (match) {
+                    const frontMatterText = match[1];
+                    const content = match[2];
+                    
+                    // 解析YAML格式的front matter
+                    const frontMatter = {};
+                    const lines = frontMatterText.split('\n');
+                    
+                    lines.forEach(line => {
+                        const colonIndex = line.indexOf(':');
+                        if (colonIndex !== -1) {
+                            const key = line.substring(0, colonIndex).trim();
+                            let value = line.substring(colonIndex + 1).trim();
+                            
+                            // 处理数组类型的值
+                            if (value.startsWith('[') && value.endsWith(']')) {
+                                try {
+                                    value = JSON.parse(value.replace(/'/g, '"'));
+                                } catch (e) {
+                                    // 如果JSON解析失败，按字符串数组处理
+                                    value = value.substring(1, value.length - 1)
+                                        .split(',')
+                                        .map(item => item.trim().replace(/^['"]|['"]$/g, ''));
+                                }
+                            }
+                            
+                            // 处理布尔值
+                            if (value === 'true') value = true;
+                            if (value === 'false') value = false;
+                            
+                            frontMatter[key] = value;
+                        }
+                    });
+                    
+                    return { frontMatter, content };
+                }
+                
+                // 没有front matter的情况
+                return { frontMatter: {}, content: markdownContent };
             }
         };
 
@@ -938,39 +984,58 @@
             // 加载资源数据
             async loadResources() {
                 try {
+                    // 1. 加载主索引文件
                     const response = await fetch(AppConfig.dataUrl);
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        throw new Error(`无法加载索引文件: ${response.status}`);
                     }
-                    const data = await response.json();
                     
-                    // 确保数据格式正确
-                    if (Array.isArray(data)) {
-                        AppState.allResources = data.map((resource, index) => ({
-                            id: resource.id || index + 1,
-                            type: resource.type || 'web',
-                            title: resource.title || '未命名资源',
-                            description: resource.description || '暂无描述',
-                            url: resource.url || '#',
-                            contentUrl: resource.contentUrl,
-                            downloadUrl: resource.downloadUrl,
-                            tags: Array.isArray(resource.tags) ? resource.tags : [],
-                            date: resource.date || new Date().toISOString().split('T')[0],
-                            price: resource.price,
-                            author: resource.author,
-                            readTime: resource.readTime,
-                            size: resource.size,
-                            format: resource.format,
-                            version: resource.version,
-                            requirements: resource.requirements,
-                            source: resource.source
-                        }));
-                    } else {
-                        throw new Error('数据格式不正确，应为数组');
+                    const indexData = await response.json();
+                    console.log('加载的索引数据:', indexData);
+                    
+                    // 2. 根据索引文件加载所有Markdown文件
+                    AppState.allResources = [];
+                    let resourceId = 1;
+                    
+                    // 加载cards资源
+                    if (indexData.cards && Array.isArray(indexData.cards)) {
+                        for (const filePath of indexData.cards) {
+                            try {
+                                const resource = await this.loadMarkdownResource(filePath, 'cards', resourceId++);
+                                AppState.allResources.push(resource);
+                            } catch (error) {
+                                console.warn(`加载卡片资源失败 ${filePath}:`, error);
+                            }
+                        }
+                    }
+                    
+                    // 加载articles资源
+                    if (indexData.articles && Array.isArray(indexData.articles)) {
+                        for (const filePath of indexData.articles) {
+                            try {
+                                const resource = await this.loadMarkdownResource(filePath, 'articles', resourceId++);
+                                AppState.allResources.push(resource);
+                            } catch (error) {
+                                console.warn(`加载文章资源失败 ${filePath}:`, error);
+                            }
+                        }
+                    }
+                    
+                    // 加载files资源
+                    if (indexData.files && Array.isArray(indexData.files)) {
+                        for (const filePath of indexData.files) {
+                            try {
+                                const resource = await this.loadMarkdownResource(filePath, 'files', resourceId++);
+                                AppState.allResources.push(resource);
+                            } catch (error) {
+                                console.warn(`加载文件资源失败 ${filePath}:`, error);
+                            }
+                        }
                     }
                     
                     console.log(`成功加载 ${AppState.allResources.length} 个资源`);
                     return true;
+                    
                 } catch (error) {
                     console.error('加载资源失败:', error);
                     // 使用示例数据作为备选
@@ -980,73 +1045,129 @@
                 }
             },
 
-            // 获取示例数据
+            // 加载单个Markdown资源
+            async loadMarkdownResource(filePath, type, id) {
+                try {
+                    const response = await fetch(filePath);
+                    if (!response.ok) {
+                        throw new Error(`HTTP错误: ${response.status}`);
+                    }
+                    
+                    const markdownContent = await response.text();
+                    const { frontMatter, content } = Utils.parseMarkdownWithFrontMatter(markdownContent);
+                    
+                    // 构建资源对象
+                    const resource = {
+                        id: id,
+                        type: type,
+                        title: frontMatter.title || filePath.split('/').pop().replace('.md', '').replace(/^\d+_/, ''),
+                        description: frontMatter.description || content.substring(0, 150) + '...',
+                        content: content,
+                        contentUrl: filePath,
+                        tags: frontMatter.tags || [],
+                        date: frontMatter.date || new Date().toISOString().split('T')[0],
+                        author: frontMatter.author,
+                        url: frontMatter.url || frontMatter.link || '#',
+                        downloadUrl: frontMatter.downloadUrl || frontMatter.download,
+                        readTime: frontMatter.readTime || frontMatter.reading_time,
+                        size: frontMatter.size,
+                        format: frontMatter.format,
+                        version: frontMatter.version,
+                        requirements: frontMatter.requirements,
+                        source: frontMatter.source,
+                        price: frontMatter.price,
+                        // 从front matter中提取其他字段
+                        ...frontMatter
+                    };
+                    
+                    // 确保tags是数组
+                    if (!Array.isArray(resource.tags)) {
+                        resource.tags = resource.tags ? [resource.tags] : [];
+                    }
+                    
+                    return resource;
+                    
+                } catch (error) {
+                    console.error(`加载Markdown文件失败 ${filePath}:`, error);
+                    throw error;
+                }
+            },
+
+            // 获取示例数据（备选）
             getSampleData() {
                 return [
                     {
                         id: 1,
-                        type: 'web',
-                        title: 'GitHub',
-                        description: '全球最大的代码托管平台',
-                        url: 'https://github.com',
-                        tags: ['推荐', '开发', '开源'],
+                        type: 'cards',
+                        title: 'nhentai 漫画资源',
+                        description: 'nhentai漫画网站的访问和下载指南',
+                        content: '这里是一些关于nhentai漫画资源的介绍...',
+                        contentUrl: 'data/cards/01_nhentai.md',
+                        tags: ['漫画', '资源', '下载'],
                         date: '2024-01-15',
-                        price: null
+                        url: 'https://nhentai.net',
+                        author: '鸿渚'
                     },
                     {
                         id: 2,
-                        type: 'article',
-                        title: 'Vue.js 入门教程',
-                        description: '从零开始学习 Vue.js 框架的完整指南',
-                        contentUrl: 'vue-tutorial.md',
-                        tags: ['新资源', '前端', '教程'],
+                        type: 'cards',
+                        title: 'EhViewer 客户端',
+                        description: 'Android平台的EhViewer客户端使用指南',
+                        content: 'EhViewer是一个优秀的E-Hentai客户端...',
+                        contentUrl: 'data/cards/02_ehviewer.md',
+                        tags: ['漫画', 'Android', '客户端'],
                         date: '2024-01-20',
-                        author: '鸿渚',
-                        readTime: '10分钟'
+                        url: 'https://github.com/EhViewer',
+                        author: '鸿渚'
                     },
                     {
                         id: 3,
-                        type: 'software',
-                        title: 'Visual Studio Code',
-                        description: '微软开发的轻量级代码编辑器',
-                        url: 'https://code.visualstudio.com',
-                        downloadUrl: 'https://code.visualstudio.com/download',
-                        tags: ['热门', '工具', '编辑器'],
+                        type: 'cards',
+                        title: '设计资源合集',
+                        description: '高质量的设计素材和资源合集',
+                        content: '包含图标、字体、模板等设计资源...',
+                        contentUrl: 'data/cards/03_design_resources.md',
+                        tags: ['设计', '素材', '资源'],
                         date: '2024-01-18',
-                        version: '1.85.0',
-                        requirements: 'Windows 10+, macOS 10.15+, Linux'
+                        url: '#',
+                        author: '鸿渚'
                     },
                     {
                         id: 4,
-                        type: 'file',
-                        title: '设计资源包',
-                        description: '包含图标、字体和设计模板的集合',
-                        url: 'files/design-resources.zip',
-                        tags: ['设计', '资源', '素材'],
+                        type: 'cards',
+                        title: 'AI绘画指南',
+                        description: 'AI绘画工具使用技巧和指南',
+                        content: '介绍Midjourney、Stable Diffusion等AI绘画工具...',
+                        contentUrl: 'data/cards/04_ai_painting.md',
+                        tags: ['AI', '绘画', '教程'],
                         date: '2024-01-22',
-                        size: '245 MB',
-                        format: 'ZIP'
+                        url: '#',
+                        author: '鸿渚'
                     },
                     {
                         id: 5,
-                        type: 'web',
-                        title: 'MDN Web Docs',
-                        description: 'Mozilla 开发者网络文档',
-                        url: 'https://developer.mozilla.org',
-                        tags: ['文档', '前端', '学习'],
+                        type: 'articles',
+                        title: 'AI绘画完整指南',
+                        description: '从入门到精通的AI绘画完整教程',
+                        content: '# AI绘画完整指南\n\n这是完整的AI绘画教程内容...',
+                        contentUrl: 'data/articles/ai-painting-guide.md',
+                        tags: ['AI', '绘画', '教程', '完整'],
                         date: '2024-01-25',
-                        price: null
+                        author: '鸿渚',
+                        readTime: '15分钟'
                     },
                     {
                         id: 6,
-                        type: 'article',
-                        title: 'JavaScript 高级编程',
-                        description: '深入理解 JavaScript 核心概念',
-                        contentUrl: 'js-advanced.md',
-                        tags: ['JavaScript', '高级', '编程'],
+                        type: 'files',
+                        title: '设计资源详细列表',
+                        description: '设计资源的详细下载和使用说明',
+                        content: '# 设计资源详细列表\n\n包含各种设计资源的详细说明...',
+                        contentUrl: 'data/files/design-resources-details.md',
+                        tags: ['设计', '资源', '下载'],
                         date: '2024-01-28',
                         author: '鸿渚',
-                        readTime: '15分钟'
+                        size: '2.5 MB',
+                        format: 'PDF'
                     }
                 ];
             },
@@ -1055,10 +1176,9 @@
             updateStats() {
                 AppState.stats = {
                     all: AppState.allResources.length,
-                    web: AppState.allResources.filter(r => r.type === 'web').length,
-                    software: AppState.allResources.filter(r => r.type === 'software').length,
-                    file: AppState.allResources.filter(r => r.type === 'file').length,
-                    article: AppState.allResources.filter(r => r.type === 'article').length
+                    cards: AppState.allResources.filter(r => r.type === 'cards').length,
+                    articles: AppState.allResources.filter(r => r.type === 'articles').length,
+                    files: AppState.allResources.filter(r => r.type === 'files').length
                 };
             }
         };
@@ -1097,89 +1217,36 @@
                 let footerContent = '';
 
                 switch (resource.type) {
-                    case 'article':
-                        bodyContent = await this.loadArticleContent(resource);
+                    case 'articles':
+                    case 'files':
+                        // 文章和文件类型显示Markdown内容
+                        bodyContent = this.renderMarkdownContent(resource);
                         footerContent = `
-                            <button class="modal-action-btn secondary" onclick="window.open('${resource.source || resource.url || '#'}', '_blank')">
-                                <i class="fas fa-external-link-alt"></i>查看原文
-                            </button>
-                            <button class="modal-action-btn primary" onclick="ModalManager.close()">
-                                <i class="fas fa-times"></i>关闭
-                            </button>
-                        `;
-                        break;
-
-                    case 'web':
-                        bodyContent = `
-                            <div class="web-content">
-                                <i class="fas fa-globe" style="font-size: 4rem; color: var(--color-web); margin-bottom: 1.5rem;"></i>
-                                <h3 style="margin-bottom: 1rem;">${resource.title}</h3>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">${resource.description}</p>
-                                <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                                    <p style="margin: 0; word-break: break-all;"><strong>URL:</strong> ${resource.url}</p>
-                                </div>
-                            </div>
-                        `;
-                        footerContent = `
-                            <button class="modal-action-btn primary" onclick="window.open('${resource.url}', '_blank')">
-                                <i class="fas fa-external-link-alt"></i>访问网站
-                            </button>
+                            ${resource.url && resource.url !== '#' ? `
+                                <button class="modal-action-btn primary" onclick="window.open('${resource.url}', '_blank')">
+                                    <i class="fas fa-external-link-alt"></i>访问链接
+                                </button>
+                            ` : ''}
+                            ${resource.downloadUrl ? `
+                                <button class="modal-action-btn primary" onclick="window.open('${resource.downloadUrl}', '_blank')">
+                                    <i class="fas fa-download"></i>下载文件
+                                </button>
+                            ` : ''}
                             <button class="modal-action-btn secondary" onclick="ModalManager.close()">
                                 <i class="fas fa-times"></i>关闭
                             </button>
                         `;
                         break;
 
-                    case 'software':
-                        bodyContent = `
-                            <div class="software-content">
-                                <i class="fas fa-download" style="font-size: 4rem; color: var(--color-software); margin-bottom: 1.5rem;"></i>
-                                <h3 style="margin-bottom: 1rem;">${resource.title}</h3>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">${resource.description}</p>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
-                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">版本</p>
-                                        <p style="margin: 0; font-weight: 600;">${resource.version || '最新版'}</p>
-                                    </div>
-                                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
-                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">系统要求</p>
-                                        <p style="margin: 0; font-weight: 600;">${resource.requirements || 'Windows/Mac/Linux'}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                    case 'cards':
+                        // 卡片类型显示概览信息
+                        bodyContent = this.renderCardContent(resource);
                         footerContent = `
-                            <button class="modal-action-btn primary" onclick="window.open('${resource.downloadUrl || resource.url}', '_blank')">
-                                <i class="fas fa-download"></i>下载软件
-                            </button>
-                            <button class="modal-action-btn secondary" onclick="ModalManager.close()">
-                                <i class="fas fa-times"></i>关闭
-                            </button>
-                        `;
-                        break;
-
-                    case 'file':
-                        bodyContent = `
-                            <div class="file-content">
-                                <i class="fas fa-file-alt" style="font-size: 4rem; color: var(--color-file); margin-bottom: 1.5rem;"></i>
-                                <h3 style="margin-bottom: 1rem;">${resource.title}</h3>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">${resource.description}</p>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
-                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">文件大小</p>
-                                        <p style="margin: 0; font-weight: 600;">${resource.size || '未知'}</p>
-                                    </div>
-                                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
-                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">格式</p>
-                                        <p style="margin: 0; font-weight: 600;">${resource.format || (resource.url ? resource.url.split('.').pop().toUpperCase() : '未知')}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        footerContent = `
-                            <button class="modal-action-btn primary" onclick="window.open('${resource.url}', '_blank')">
-                                <i class="fas fa-download"></i>下载文件
-                            </button>
+                            ${resource.url && resource.url !== '#' ? `
+                                <button class="modal-action-btn primary" onclick="window.open('${resource.url}', '_blank')">
+                                    <i class="fas fa-external-link-alt"></i>访问网站
+                                </button>
+                            ` : ''}
                             <button class="modal-action-btn secondary" onclick="ModalManager.close()">
                                 <i class="fas fa-times"></i>关闭
                             </button>
@@ -1190,69 +1257,97 @@
                 DOM.modalBody.innerHTML = bodyContent;
                 DOM.modalFooter.innerHTML = footerContent;
 
-                // 如果是文章，初始化代码高亮
-                if (resource.type === 'article') {
-                    if (window.hljs) {
-                        setTimeout(() => {
-                            document.querySelectorAll('pre code').forEach((block) => {
-                                hljs.highlightElement(block);
-                            });
-                        }, 100);
-                    }
+                // 初始化代码高亮
+                if (window.hljs) {
+                    setTimeout(() => {
+                        document.querySelectorAll('pre code').forEach((block) => {
+                            hljs.highlightElement(block);
+                        });
+                    }, 100);
                 }
             },
 
-            // 加载文章内容
-            async loadArticleContent(resource) {
-                try {
-                    // 如果有 contentUrl，则加载 Markdown 文件
-                    if (resource.contentUrl) {
-                        const response = await fetch(AppConfig.markdownDir + resource.contentUrl);
-                        if (!response.ok) throw new Error('文章加载失败');
-                        
-                        const markdown = await response.text();
-                        const html = marked.parse(markdown);
-                        
-                        return `
-                            <div class="article-content">
-                                <div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);">
-                                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
-                                        <div>
-                                            <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">作者</p>
-                                            <p style="margin: 0; font-weight: 600;">${resource.author || '鸿渚'}</p>
-                                        </div>
-                                        <div>
-                                            <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">发布日期</p>
-                                            <p style="margin: 0; font-weight: 600;">${Utils.formatDate(resource.date)}</p>
-                                        </div>
-                                        <div>
-                                            <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">阅读时间</p>
-                                            <p style="margin: 0; font-weight: 600;">${resource.readTime || '5分钟'}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                ${html}
-                            </div>
-                        `;
-                    }
-                    
-                    // 否则使用描述作为内容
-                    return `
-                        <div class="article-content">
-                            <p>${resource.description}</p>
-                            ${resource.fullContent || ''}
-                        </div>
-                    `;
-                } catch (error) {
-                    console.error('加载文章失败:', error);
-                    return `
-                        <div class="error-message" style="text-align: center; padding: 3rem; color: var(--danger-color);">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                            <h3>文章加载失败</h3>
-                            <p>请稍后重试或直接访问原文链接</p>
-                        </div>
-                    `;
+            // 渲染Markdown内容
+            renderMarkdownContent(resource) {
+                let htmlContent = '';
+                
+                if (resource.content) {
+                    // 使用marked解析Markdown
+                    htmlContent = marked.parse(resource.content);
+                } else {
+                    htmlContent = `<p>${resource.description}</p>`;
                 }
+                
+                return `
+                    <div class="${resource.type === 'articles' ? 'article-content' : 'file-content'}">
+                        <div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);">
+                            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                                ${resource.author ? `
+                                    <div>
+                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">作者</p>
+                                        <p style="margin: 0; font-weight: 600;">${resource.author}</p>
+                                    </div>
+                                ` : ''}
+                                <div>
+                                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">发布日期</p>
+                                    <p style="margin: 0; font-weight: 600;">${Utils.formatDate(resource.date)}</p>
+                                </div>
+                                ${resource.readTime ? `
+                                    <div>
+                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">阅读时间</p>
+                                        <p style="margin: 0; font-weight: 600;">${resource.readTime}</p>
+                                    </div>
+                                ` : ''}
+                                ${resource.size ? `
+                                    <div>
+                                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">文件大小</p>
+                                        <p style="margin: 0; font-weight: 600;">${resource.size}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ${htmlContent}
+                    </div>
+                `;
+            },
+
+            // 渲染卡片内容
+            renderCardContent(resource) {
+                return `
+                    <div style="text-align: center;">
+                        <i class="${Utils.getTypeInfo(resource.type).icon}" 
+                           style="font-size: 4rem; color: ${Utils.getTypeInfo(resource.type).color}; margin-bottom: 1.5rem;"></i>
+                        <h3 style="margin-bottom: 1rem;">${resource.title}</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">${resource.description}</p>
+                        
+                        ${resource.url && resource.url !== '#' ? `
+                            <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: left;">
+                                <p style="margin: 0; word-break: break-all;">
+                                    <strong>链接:</strong> <a href="${resource.url}" target="_blank">${resource.url}</a>
+                                </p>
+                            </div>
+                        ` : ''}
+                        
+                        ${resource.tags && resource.tags.length > 0 ? `
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
+                                ${resource.tags.map(tag => `
+                                    <span style="padding: 4px 12px; background: var(--bg-light); border-radius: 16px; font-size: 0.85rem; color: var(--text-primary);">
+                                        ${tag}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        ${resource.content ? `
+                            <div style="text-align: left; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                                <h4 style="margin-bottom: 1rem;">详细内容</h4>
+                                <div style="color: var(--text-secondary); line-height: 1.6;">
+                                    ${marked.parse(resource.content.substring(0, 500) + (resource.content.length > 500 ? '...' : ''))}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
             }
         };
 
@@ -1326,10 +1421,9 @@
             getCategoryLabel(category) {
                 const labels = {
                     all: '全部',
-                    web: '网页推荐',
-                    software: '软件工具',
-                    file: '文件分享',
-                    article: '技术文章'
+                    cards: '卡片资源',
+                    articles: '文章教程',
+                    files: '文件下载'
                 };
                 return labels[category] || category;
             }
@@ -1343,10 +1437,9 @@
                 
                 const statsData = [
                     { id: 'all', label: '全部资源', icon: 'fas fa-th-large', count: AppState.stats.all },
-                    { id: 'web', label: '网页推荐', icon: 'fas fa-globe', count: AppState.stats.web },
-                    { id: 'software', label: '软件工具', icon: 'fas fa-download', count: AppState.stats.software },
-                    { id: 'file', label: '文件分享', icon: 'fas fa-file-alt', count: AppState.stats.file },
-                    { id: 'article', label: '技术文章', icon: 'fas fa-newspaper', count: AppState.stats.article }
+                    { id: 'cards', label: '卡片资源', icon: 'fas fa-layer-group', count: AppState.stats.cards },
+                    { id: 'articles', label: '文章教程', icon: 'fas fa-newspaper', count: AppState.stats.articles },
+                    { id: 'files', label: '文件下载', icon: 'fas fa-file-download', count: AppState.stats.files }
                 ];
 
                 let statsHTML = '';
@@ -1388,10 +1481,9 @@
             renderCategoryFilters() {
                 const categories = [
                     { id: 'all', label: '全部', icon: 'fas fa-th-large' },
-                    { id: 'web', label: '网页推荐', icon: 'fas fa-globe' },
-                    { id: 'software', label: '软件工具', icon: 'fas fa-download' },
-                    { id: 'file', label: '文件分享', icon: 'fas fa-file-alt' },
-                    { id: 'article', label: '技术文章', icon: 'fas fa-newspaper' }
+                    { id: 'cards', label: '卡片资源', icon: 'fas fa-layer-group' },
+                    { id: 'articles', label: '文章教程', icon: 'fas fa-newspaper' },
+                    { id: 'files', label: '文件下载', icon: 'fas fa-file-download' }
                 ];
 
                 let filtersHTML = '';
@@ -1477,7 +1569,7 @@
                                 <p class="card-desc">${resource.description}</p>
                                 <div class="card-meta">
                                     <span><i class="far fa-calendar"></i> ${Utils.formatDate(resource.date)}</span>
-                                    ${resource.price ? `<span class="card-price">¥${resource.price}</span>` : ''}
+                                    ${resource.author ? `<span><i class="fas fa-user"></i> ${resource.author}</span>` : ''}
                                 </div>
                                 <div class="card-actions">
                                     <button class="card-action-btn secondary" onclick="event.stopPropagation(); ModalManager.open(${JSON.stringify(resource).replace(/"/g, '&quot;')})">
@@ -1485,7 +1577,7 @@
                                     </button>
                                     ${resource.url && resource.url !== '#' ? `
                                         <a href="${resource.url}" class="card-action-btn primary" target="_blank" onclick="event.stopPropagation();">
-                                            <i class="fas fa-external-link-alt"></i>立即访问
+                                            <i class="fas fa-external-link-alt"></i>访问链接
                                         </a>
                                     ` : ''}
                                 </div>
