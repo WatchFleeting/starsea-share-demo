@@ -16,7 +16,7 @@ AI绘画是人工智能技术在创意领域的重要应用...
 ## 第二章：主流工具对比
 
 ### 1. Midjourney
-```python
+
 # 基础提示词示例
 prompt = "a beautiful landscape, digital art, trending on artstation"
 
