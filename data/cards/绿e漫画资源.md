@@ -1,4 +1,5 @@
 ---
+id: 7
 title: "绿e - 漫画资源"
 description: "Ehviewer绿版，优化版本，提供更好的阅读体验。体积小巧，运行流畅，适合低配置设备。"
 category: "程序资源"
