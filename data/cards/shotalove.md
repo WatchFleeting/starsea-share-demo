@@ -1,4 +1,5 @@
 ---
+id: 4
 title: "shotalove"
 description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。特别适合喜欢轻松恋爱题材的用户。"
 category: "漫画资源"
