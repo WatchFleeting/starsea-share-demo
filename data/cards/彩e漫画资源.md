@@ -1,4 +1,5 @@
 ---
+id: 6
 title: "彩e - 漫画资源"
 description: "Ehviewer彩版，功能强大的漫画阅读器，支持多种格式。拥有丰富的自定义选项和流畅的阅读体验。"
 category: "程序资源"
