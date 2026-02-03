@@ -1,4 +1,5 @@
 ---
+id: 22
 title: "拟杰ai"
 description: "AI绘画技术教程与资源分享。提供详细的AI绘画入门教程和实用工具推荐。"
 category: "优质UP"
