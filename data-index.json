@@ -1,5 +1,5 @@
 {
-  "cards":[
+  "cards": [
     "data/cards/design_resources.md",
     "data/cards/ai_painting.md",
     "data/cards/nhentai.md",
@@ -27,10 +27,10 @@
     "data/cards/小番茄V3.0.md",
     "data/cards/服务条款.md"
   ],
-  "articles":[
+  "articles": [
     "data/articles/ai-painting-guide.md"
   ],
-  "files":[
+  "files": [
     "data/files/design-resources-details.md"
   ]
 }
