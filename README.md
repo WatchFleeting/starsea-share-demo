@@ -65,7 +65,7 @@
 ### 1. 资源卡片 (`data/cards/` 目录下)
 每个文件定义首页上的一张卡片。
 
-**文件名示例：** `01_my_resource.md`
+**文件名示例：** `my_resource.md`
 ````yaml
 ---
 # 基础信息
@@ -165,11 +165,11 @@ description: "这里是文件的详细描述和使用说明。"
 ```json
 {
   "cards": [
-    "data/cards/01_nhentai.md",
-    "data/cards/02_ehviewer.md",
-    "data/cards/03_design_resources.md",
-    "data/cards/04_ai_painting.md",
-    "data/cards/05_your_new_card.md" // 在此处添加新卡片路径
+    "data/cards/nhentai.md",
+    "data/cards/ehviewer.md",
+    "data/cards/design_resources.md",
+    "data/cards/ai_painting.md",
+    "data/cards/your_new_card.md" // 在此处添加新卡片路径
   ],
   "articles": [
     "data/articles/ai-painting-guide.md"
@@ -245,4 +245,5 @@ A: 整个 `data/` 目录包含了你的所有核心内容，定期备份此目�
 - 通过 GitHub Issues 提交问题。
 
 - 如需安全漏洞报告，请通过邮件私下联系。
+
 
