@@ -12,227 +12,595 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
     <style>
-        /* 在原有CSS基础上添加以下样式 */
+        /* ===== 重置与基础样式 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* 搜索框样式 */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --dark-lighter: #334155;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            
+            --gradient-bg: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+            
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            
+            --transition-fast: 150ms ease;
+            --transition-base: 300ms ease;
+            --transition-slow: 500ms ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gradient-bg);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== 导航栏样式 ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 0;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .site-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .site-title i {
+            font-size: 1.8rem;
+        }
+
+        /* ===== 搜索区域 ===== */
         .search-container {
-            position: relative;
             flex: 1;
-            max-width: 500px;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            width: 100%;
         }
 
         .search-input {
             width: 100%;
-            padding: 12px 50px 12px 20px;
-            border: 2px solid var(--input-border);
-            background: var(--input-bg);
-            border-radius: 30px;
+            padding: 16px 24px;
+            padding-left: 52px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: var(--border-radius-xl);
+            color: var(--light);
             font-size: 1rem;
-            color: var(--text-color);
-            transition: var(--transition);
-            outline: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-base);
+            backdrop-filter: blur(10px);
         }
 
         .search-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 5px 20px rgba(90, 103, 216, 0.2);
-            transform: translateY(-1px);
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+            background: rgba(30, 41, 59, 0.9);
         }
 
-        .search-btn {
+        .search-input::placeholder {
+            color: var(--gray);
+        }
+
+        .search-icon {
             position: absolute;
-            right: 10px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 1.2rem;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
         }
 
-        .search-btn:hover {
-            background: rgba(90, 103, 216, 0.1);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        /* 统计栏样式增强 */
-        .stats-bar {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 2rem;
-            padding: 25px;
-            background: var(--stats-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .stats-items {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px 25px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            min-width: 120px;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--card-shadow-hover);
-            border-color: var(--primary-color);
-        }
-
-        .stat-item.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .stat-item.active .stat-number,
-        .stat-item.active .stat-label {
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            line-height: 1;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray-color);
-            font-weight: 500;
-        }
-
-        /* 搜索过滤器 */
         .search-filters {
             display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
         }
 
         .filter-tag {
-            padding: 6px 15px;
-            background: var(--category-bg);
-            border: 1px solid var(--category-border);
+            padding: 6px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 20px;
             font-size: 0.85rem;
-            color: var(--text-color);
+            color: var(--primary-light);
             cursor: pointer;
-            transition: var(--transition);
+            transition: all var(--transition-fast);
         }
 
         .filter-tag:hover {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-1px);
         }
 
         .filter-tag.active {
-            background: var(--primary-color);
+            background: var(--gradient-primary);
             color: white;
-            border-color: var(--primary-color);
+            border-color: transparent;
+            box-shadow: var(--shadow-glow);
         }
 
-        /* 搜索结果提示 */
-        .search-results-info {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            border-left: 4px solid var(--primary-color);
+        /* ===== 统计栏样式 ===== */
+        .stats-bar {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all var(--transition-base);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--gray);
             font-size: 0.9rem;
-            color: var(--text-color);
+            font-weight: 500;
         }
 
-        /* 卡片网格布局优化 */
+        /* ===== 资源网格样式 ===== */
         .resource-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
         }
 
-        /* 暗色模式调整 */
-        body.dark-theme .search-input {
-            background: rgba(51, 65, 85, 0.8);
-            border-color: #4a5568;
+        .resource-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: all var(--transition-base);
+            position: relative;
+            cursor: pointer;
         }
 
-        body.dark-theme .stat-item {
-            background: rgba(30, 41, 59, 0.9);
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
-        body.dark-theme .search-results-info {
-            background: rgba(30, 41, 59, 0.9);
+        .resource-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .card-header {
+            padding: 24px;
+            padding-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .resource-type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary-light);
+        }
+
+        .resource-views {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .card-content {
+            padding: 0 24px 24px;
+        }
+
+        .resource-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--light);
+            line-height: 1.4;
+        }
+
+        .resource-description {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .resource-tag {
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            font-size: 0.8rem;
+            color: var(--primary-light);
+        }
+
+        .card-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .card-action-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-action-btn:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* ===== 搜索结果提示 ===== */
+        .search-results-info {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--border-radius-md);
+            padding: 16px 24px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        /* ===== 空状态 ===== */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+
+        .no-results p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        /* ===== 响应式设计 ===== */
+        @media (max-width: 1024px) {
+            .resource-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .search-container {
+                max-width: 100%;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-filters {
+                justify-content: center;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+            
+            .resource-card {
+                margin: 0 -16px;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+        }
+
+        /* ===== 动画效果 ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .resource-card {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        .resource-card:nth-child(4) { animation-delay: 0.4s; }
+        .resource-card:nth-child(5) { animation-delay: 0.5s; }
+        .resource-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* ===== 装饰元素 ===== */
+        .bg-blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .blur-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: 10%;
+            right: 10%;
         }
     </style>
 </head>
 <body>
-    <!-- 在导航栏部分添加搜索框 -->
+    <!-- 背景模糊元素 -->
+    <div class="bg-blur">
+        <div class="blur-circle circle-1"></div>
+        <div class="blur-circle circle-2"></div>
+    </div>
+
+    <!-- 导航栏 -->
     <nav>
         <div class="container nav-content">
-            <div class="filter-section">
-                <div class="search-container">
-                    <input type="text" class="search-input" id="search-input" 
-                           placeholder="全能搜索：标题、描述、标签、类型..." 
-                           aria-label="搜索资源">
-                    <button class="search-btn" id="search-btn" aria-label="搜索">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                
-                <div class="search-filters" id="search-filters">
-                    <!-- 搜索过滤器将通过JS动态生成 -->
-                </div>
+            <div class="site-title">
+                <i class="fas fa-database"></i>
+                <span>鸿渚の资源分享</span>
             </div>
             
-            <div class="view-toggle">
-                <!-- 原有的视图切换按钮 -->
+            <div class="filter-section">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" id="search-input" 
+                               placeholder="全能搜索：标题、描述、标签、类型..." 
+                               aria-label="搜索资源">
+                    </div>
+                    
+                    <div class="search-filters" id="search-filters">
+                        <!-- 搜索过滤器将通过JS动态生成 -->
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 统计栏更新 -->
+    <!-- 主内容 -->
     <main>
         <div class="container">
-            <div class="stats-bar" id="stats-bar">
-                <div class="stats-items" id="stats-items">
+            <!-- 统计栏 -->
+            <div class="stats-bar">
+                <div class="stats-grid" id="stats-items">
                     <!-- 统计项将通过JS动态生成 -->
                 </div>
-                
-                <div class="search-results-info" id="search-results-info" style="display: none;">
-                    <!-- 搜索结果提示 -->
-                </div>
+            </div>
+
+            <!-- 搜索结果提示 -->
+            <div class="search-results-info" id="search-results-info" style="display: none;">
+                <!-- 搜索结果提示 -->
             </div>
 
             <!-- 资源网格 -->
@@ -248,68 +616,98 @@
             {
                 id: 1,
                 title: "DeepSeek介绍",
-                description: "深度求索公司开发的AI助手",
+                description: "深度求索公司开发的AI助手，提供智能对话和问题解答服务",
                 type: "article",
                 category: "ai",
-                tags: ["AI", "助手", "智能"],
+                tags: ["AI", "助手", "智能", "深度学习"],
                 contentUrl: "articles/deepseek-intro.md",
                 date: "2024-01-15",
-                views: 1250
+                views: 1250,
+                rating: 4.8
             },
             {
                 id: 2,
                 title: "GitHub官网",
-                description: "全球最大的代码托管平台",
+                description: "全球最大的代码托管平台，支持Git版本控制和协作开发",
                 type: "web",
                 category: "development",
-                tags: ["代码", "开源", "开发"],
+                tags: ["代码", "开源", "开发", "版本控制"],
                 url: "https://github.com",
                 date: "2024-01-10",
-                views: 3450
+                views: 3450,
+                rating: 4.9
             },
             {
                 id: 3,
                 title: "React教程PDF",
-                description: "React框架完整学习指南",
+                description: "React框架完整学习指南，包含实战项目和最佳实践",
                 type: "file",
                 category: "development",
-                tags: ["React", "前端", "教程"],
+                tags: ["React", "前端", "教程", "JavaScript"],
                 url: "files/react-tutorial.pdf",
                 date: "2024-01-05",
-                views: 890
+                views: 890,
+                rating: 4.5
             },
             {
                 id: 4,
                 title: "漫画资源站",
-                description: "海量漫画资源在线观看",
+                description: "海量漫画资源在线观看，支持多种格式和阅读模式",
                 type: "web",
                 category: "comic",
-                tags: ["漫画", "动漫", "娱乐"],
+                tags: ["漫画", "动漫", "娱乐", "在线阅读"],
                 url: "https://example.com/comic",
                 date: "2024-01-12",
-                views: 5670
+                views: 5670,
+                rating: 4.7
             },
             {
                 id: 5,
                 title: "JavaScript性能优化",
-                description: "提升JS代码性能的最佳实践",
+                description: "提升JS代码性能的最佳实践，包含内存管理和渲染优化",
                 type: "article",
                 category: "development",
-                tags: ["JavaScript", "性能", "优化"],
+                tags: ["JavaScript", "性能", "优化", "前端"],
                 contentUrl: "articles/js-optimization.md",
                 date: "2024-01-08",
-                views: 2100
+                views: 2100,
+                rating: 4.6
             },
             {
                 id: 6,
                 title: "设计素材包",
-                description: "包含各种UI设计资源",
+                description: "包含各种UI设计资源，图标、插图和组件库",
                 type: "file",
                 category: "design",
-                tags: ["设计", "素材", "UI"],
+                tags: ["设计", "素材", "UI", "创意"],
                 url: "files/design-resources.zip",
                 date: "2024-01-03",
-                views: 1200
+                views: 1200,
+                rating: 4.4
+            },
+            {
+                id: 7,
+                title: "Python数据分析",
+                description: "使用Python进行数据分析和可视化的完整教程",
+                type: "article",
+                category: "development",
+                tags: ["Python", "数据分析", "可视化", "教程"],
+                contentUrl: "articles/python-data-analysis.md",
+                date: "2024-01-18",
+                views: 1800,
+                rating: 4.7
+            },
+            {
+                id: 8,
+                title: "矢量图标库",
+                description: "高质量矢量图标资源，支持SVG和多种格式导出",
+                type: "web",
+                category: "design",
+                tags: ["图标", "矢量", "设计资源", "SVG"],
+                url: "https://example.com/icons",
+                date: "2024-01-14",
+                views: 2300,
+                rating: 4.8
             }
         ];
 
@@ -356,10 +754,13 @@
                 Object.values(statsInfo).forEach(stat => {
                     const isActive = this.currentFilter === stat.type;
                     statsHTML += `
-                        <div class="stat-item ${isActive ? 'active' : ''}" 
+                        <div class="stat-card ${isActive ? 'active' : ''}" 
                              data-type="${stat.type}">
-                            <span class="stat-number">${stat.count}</span>
-                            <span class="stat-label">${stat.label}</span>
+                            <div class="stat-icon">
+                                <i class="${stat.icon}"></i>
+                            </div>
+                            <div class="stat-number">${stat.count}</div>
+                            <div class="stat-label">${stat.label}</div>
                         </div>
                     `;
                 });
@@ -367,7 +768,7 @@
                 statsContainer.innerHTML = statsHTML;
 
                 // 添加统计项点击事件
-                document.querySelectorAll('.stat-item').forEach(item => {
+                document.querySelectorAll('.stat-card').forEach(item => {
                     item.addEventListener('click', () => {
                         const type = item.dataset.type;
                         this.filterByType(type);
@@ -386,7 +787,7 @@
                     category: '分类'
                 };
 
-                let filtersHTML = '<span>搜索范围：</span>';
+                let filtersHTML = '<span style="color: var(--gray); font-size: 0.9rem;">搜索范围：</span>';
                 this.searchFilters.forEach(filter => {
                     const isActive = this.activeFilters.has(filter);
                     filtersHTML += `
@@ -435,7 +836,7 @@
                 }
                 
                 // 更新统计激活状态
-                document.querySelectorAll('.stat-item').forEach(item => {
+                document.querySelectorAll('.stat-card').forEach(item => {
                     const itemType = item.dataset.type;
                     item.classList.toggle('active', itemType === type);
                 });
@@ -505,24 +906,36 @@
                 
                 if (this.filteredResources.length === 0) {
                     grid.innerHTML = `
-                        <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-                            <i class="fas fa-search" style="font-size: 4rem; color: var(--gray-color); margin-bottom: 20px;"></i>
-                            <h3 style="margin-bottom: 10px; color: var(--text-color);">未找到相关资源</h3>
-                            <p style="color: var(--gray-color);">尝试更换搜索关键词或清除筛选条件</p>
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            <h3>未找到相关资源</h3>
+                            <p>尝试更换搜索关键词或清除筛选条件</p>
                         </div>
                     `;
                     return;
                 }
                 
                 let cardsHTML = '';
-                this.filteredResources.forEach(resource => {
+                this.filteredResources.forEach((resource, index) => {
                     // 根据类型确定卡片颜色
-                    let cardClass = '';
+                    let typeColor = '';
+                    let typeIcon = '';
                     switch(resource.type) {
-                        case 'web': cardClass = 'card-web'; break;
-                        case 'article': cardClass = 'card-article'; break;
-                        case 'file': cardClass = 'card-file'; break;
-                        default: cardClass = 'card-web';
+                        case 'web': 
+                            typeColor = 'var(--primary)';
+                            typeIcon = 'fas fa-globe';
+                            break;
+                        case 'article': 
+                            typeColor = 'var(--success)';
+                            typeIcon = 'fas fa-newspaper';
+                            break;
+                        case 'file': 
+                            typeColor = 'var(--warning)';
+                            typeIcon = 'fas fa-file-download';
+                            break;
+                        default: 
+                            typeColor = 'var(--primary)';
+                            typeIcon = 'fas fa-box';
                     }
                     
                     // 构建标签HTML
@@ -533,12 +946,28 @@
                         ).join('');
                     }
                     
+                    // 构建星级评分HTML
+                    let ratingHTML = '';
+                    if (resource.rating) {
+                        const fullStars = Math.floor(resource.rating);
+                        const hasHalfStar = resource.rating % 1 >= 0.5;
+                        ratingHTML = `
+                            <div style="display: flex; align-items: center; gap: 4px; margin-top: 8px;">
+                                <div style="display: flex; color: #fbbf24;">
+                                    ${'<i class="fas fa-star"></i>'.repeat(fullStars)}
+                                    ${hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                                </div>
+                                <span style="font-size: 0.85rem; color: var(--gray);">${resource.rating}</span>
+                            </div>
+                        `;
+                    }
+                    
                     // 构建卡片HTML
                     cardsHTML += `
-                        <div class="resource-card ${cardClass}" data-id="${resource.id}">
+                        <div class="resource-card" data-id="${resource.id}" style="animation-delay: ${index * 0.1}s">
                             <div class="card-header">
-                                <div class="resource-type">
-                                    <i class="${this.getTypeIcon(resource.type)}"></i>
+                                <div class="resource-type" style="border-color: ${typeColor}; color: ${typeColor};">
+                                    <i class="${typeIcon}"></i>
                                     <span>${this.getTypeLabel(resource.type)}</span>
                                 </div>
                                 <div class="resource-views">
@@ -549,6 +978,7 @@
                             <div class="card-content">
                                 <h3 class="resource-title">${resource.title}</h3>
                                 <p class="resource-description">${resource.description}</p>
+                                ${ratingHTML}
                                 <div class="resource-tags">
                                     ${tagsHTML}
                                 </div>
@@ -570,17 +1000,6 @@
                 
                 // 添加卡片事件监听
                 this.addCardEventListeners();
-            }
-
-            // 获取类型图标
-            getTypeIcon(type) {
-                const icons = {
-                    web: 'fas fa-globe',
-                    article: 'fas fa-newspaper',
-                    file: 'fas fa-file-download',
-                    default: 'fas fa-box'
-                };
-                return icons[type] || icons.default;
             }
 
             // 获取类型标签
@@ -651,8 +1070,32 @@
                 const resource = this.resources.find(r => r.id === id);
                 if (!resource) return;
                 
-                alert(`打开资源详情：${resource.title}\n类型：${resource.type}\n描述：${resource.description}`);
-                // 这里可以替换为你原有的模态框打开逻辑
+                // 这里可以替换为模态框打开逻辑
+                const detailHtml = `
+                    <div style="background: var(--dark-light); padding: 20px; border-radius: var(--border-radius-md); max-width: 500px;">
+                        <h3 style="color: var(--light); margin-bottom: 16px; font-size: 1.5rem;">${resource.title}</h3>
+                        <p style="color: var(--gray); margin-bottom: 12px;">${resource.description}</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                            ${resource.tags.map(tag => `<span style="background: rgba(99, 102, 241, 0.1); padding: 4px 12px; border-radius: 16px; font-size: 0.8rem; color: var(--primary-light);">${tag}</span>`).join('')}
+                        </div>
+                        <div style="display: flex; justify-content: space-between; color: var(--gray); font-size: 0.9rem;">
+                            <span>类型: ${this.getTypeLabel(resource.type)}</span>
+                            <span>浏览量: ${resource.views}</span>
+                            <span>日期: ${resource.date}</span>
+                        </div>
+                    </div>
+                `;
+                
+                // 使用浏览器原生弹窗（实际项目中建议使用自定义模态框）
+                alert(`资源详情：${resource.title}\n类型：${resource.type}\n描述：${resource.description}\n\n实际项目中请替换为模态框显示`);
+                
+                // 如果是网页资源，可以直接打开
+                if (resource.type === 'web' && resource.url) {
+                    const shouldOpen = confirm(`是否打开网页：${resource.url}？`);
+                    if (shouldOpen) {
+                        window.open(resource.url, '_blank');
+                    }
+                }
             }
 
             // 快速访问资源
@@ -670,7 +1113,6 @@
             // 设置事件监听器
             setupEventListeners() {
                 const searchInput = document.getElementById('search-input');
-                const searchBtn = document.getElementById('search-btn');
                 
                 // 输入搜索
                 let searchTimeout;
@@ -679,11 +1121,6 @@
                     searchTimeout = setTimeout(() => {
                         this.searchResources(e.target.value);
                     }, 300);
-                });
-                
-                // 按钮搜索
-                searchBtn.addEventListener('click', () => {
-                    this.searchResources(searchInput.value);
                 });
                 
                 // 回车搜索
