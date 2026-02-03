@@ -1,4 +1,5 @@
 ---
+id: 8
 title: "白e - 漫画资源"
 description: "Ehviewer白版，简洁界面，专注于核心阅读功能。无广告，启动快速，适合追求简洁的用户。"
 category: "程序资源"
