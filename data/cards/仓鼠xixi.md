@@ -1,4 +1,5 @@
 ---
+id: 17
 title: "仓鼠xixi"
 description: "AI绘画作品分享，创意十足。专注于AI绘画教程和资源分享，适合AI绘画爱好者。"
 category: "优质UP"
